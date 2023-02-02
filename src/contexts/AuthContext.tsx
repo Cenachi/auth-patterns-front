@@ -8,12 +8,19 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 type AuthContextType = {
   isAuthenticated: boolean;
   signUp: (username: string, email: string, password: string) => void;
   signIn: ({ email, password }: SignInData) => void;
   logout: () => void;
-  user: any;
+  user: User | null;
 };
 
 type SignInData = {
@@ -26,7 +33,12 @@ const AuthContext = createContext<AuthContextType>({
   signUp: () => {},
   signIn: () => {},
   logout: () => {},
-  user: {},
+  user: {
+    email: "",
+    id: "",
+    name: "",
+    role: "",
+  },
 });
 
 export const useAuthContext = () => {
@@ -35,7 +47,7 @@ export const useAuthContext = () => {
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   const signUp = async (username: string, email: string, password: string) => {

@@ -32,7 +32,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.welcome}>
-          Bem vindo <strong>{user?.name}</strong>
+          Bem vindo <strong>{user?.email}</strong>
         </div>
         <button className={styles.logout} onClick={logout}>
           Logout
