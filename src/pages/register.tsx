@@ -48,7 +48,7 @@ export default function Register() {
       signUp(data.name, data.email, data.password);
       router.push("/");
     } catch (e) {
-      console.log("Erro", e);
+      console.error("Error", e);
     }
   };
 

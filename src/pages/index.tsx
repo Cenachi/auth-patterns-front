@@ -18,7 +18,7 @@ export default function Home() {
     if (!isAuthenticated) {
       router.push("/login");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, user]);
 
   return (
     <>
@@ -28,10 +28,15 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
+      {!isAuthenticated && <Navbar />}
+
       <main className={styles.main}>
-        <div>{user.name}</div>
-        <button onClick={logout}>Logout</button>
+        <div className={styles.welcome}>
+          Bem vindo <strong>{user?.name}</strong>
+        </div>
+        <button className={styles.logout} onClick={logout}>
+          Logout
+        </button>
       </main>
     </>
   );

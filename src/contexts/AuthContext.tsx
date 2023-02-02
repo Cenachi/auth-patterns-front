@@ -13,7 +13,6 @@ type AuthContextType = {
   signUp: (username: string, email: string, password: string) => void;
   signIn: ({ email, password }: SignInData) => void;
   logout: () => void;
-
   user: any;
 };
 
@@ -37,6 +36,7 @@ export const useAuthContext = () => {
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [user, setUser] = useState(null);
+  const router = useRouter();
 
   const signUp = async (username: string, email: string, password: string) => {
     return await api.post("/register", {
@@ -58,7 +58,8 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
       setUser(res.data.user);
       setIsAuthenticated(true);
-      console.log(res);
+
+      router.push("/");
     } catch (e) {
       console.error("Erro", e);
     }
@@ -82,7 +83,9 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signUp, signIn, logout,user }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, signUp, signIn, logout, user }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,13 +1,15 @@
 import React from "react";
-import styles from "../../components/buttons/PrimaryButton/button.module.scss";
+import styles from "./styles.module.scss";
 import Link from "next/link";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 export const Navbar = () => {
+  const { isAuthenticated } = useAuthContext();
+
   return (
     <nav className={styles.container}>
-      <div className={styles.button}>
-        <Link href={"/login"}>Login/Register</Link>
-      </div>
+      <Link href={"/login"}>Login</Link>
+      <Link href={"/register"}>Register</Link>
     </nav>
   );
 };

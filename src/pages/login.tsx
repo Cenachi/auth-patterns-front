@@ -16,7 +16,7 @@ type Inputs = {
 };
 
 export default function Login() {
-  const { isAuthenticated, signIn, signUp } = useAuthContext();
+  const { signIn } = useAuthContext();
 
   const router = useRouter();
 
@@ -35,12 +35,7 @@ export default function Login() {
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    try {
-      signIn(data);
-      router.push("/");
-    } catch (e) {
-      console.log("Erro", e);
-    }
+    signIn(data);
   };
 
   return (

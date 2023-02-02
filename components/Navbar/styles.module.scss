@@ -1,22 +1,24 @@
 @import "../../src/styles/variables";
 
 .container {
-  padding: 1.5rem 2rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   border-bottom: 1px solid #ccc;
-  background: #222;
+  background: rgb(82, 37, 76);
   width: 100vw;
+  color: white;
+  font-weight: bold;
 
   a {
-    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    width: 100%;
+    transition: all 0.2s linear;
+    &:hover {
+      background: rgb(126, 52, 116);
+    }
   }
-}
-
-.user {
-  cursor: pointer;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  padding: 2px;
 }
