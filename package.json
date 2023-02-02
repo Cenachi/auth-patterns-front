@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
     "@next/font": "13.1.6",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
@@ -18,6 +19,11 @@
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "4.9.5"
+    "react-hook-form": "^7.43.0",
+    "react-icons": "^4.7.1",
+    "rsuite": "^5.25.0",
+    "sass": "^1.58.0",
+    "typescript": "4.9.5",
+    "yup": "^0.32.11"
   }
 }

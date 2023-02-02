@@ -1,0 +1,64 @@
+@import "variables";
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  color: #222;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    color: rgb(0, 0, 0);
+    background: #eee;
+  }
+}
+
+p {
+  margin: 0;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #aaa;
+  opacity: 1;
+  /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #aaa;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #aaa;
+}
+
+h3,
+h5 {
+  padding: 0;
+  margin: 0;
+}
+
+.inputError {
+  color: red;
+}

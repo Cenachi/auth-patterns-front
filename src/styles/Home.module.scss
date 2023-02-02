@@ -1,0 +1,107 @@
+@import "variables";
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  button {
+    color: white;
+  }
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: $secondary-color;
+  padding: 4rem;
+  flex: 1;
+
+  .title {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  .subtitle {
+    margin: 0;
+    font-size: 2rem;
+    color: $primary-color;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
+  padding: 2rem;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: min(100%, 20rem);
+
+    input {
+      width: 100%;
+      border: 1px solid $gray;
+      background: $primary-color;
+      padding: 1rem;
+      border-radius: $border-radius;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      gap: 16px;
+      color: #888;
+
+      &::before {
+        content: "";
+        display: block;
+        height: 1px;
+        flex: 1;
+        background: $gray;
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        height: 1px;
+        flex: 1;
+        background: $gray;
+      }
+    }
+
+    .googleButton {
+      background: white;
+      width: 100%;
+      border-radius: 0.5rem;
+      padding: 1rem 3rem;
+      color: black;
+      border: 1px solid #ddd;
+    }
+
+    .register {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+
+      strong {
+        color: $secondary-color;
+      }
+    }
+  }
+}
