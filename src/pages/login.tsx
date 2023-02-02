@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 import Link from "next/link";
 
@@ -16,6 +17,8 @@ type Inputs = {
 
 export default function Login() {
   const { isAuthenticated, signIn, signUp } = useAuthContext();
+
+  const router = useRouter();
 
   const schema = yup.object().shape({
     email: yup
@@ -34,6 +37,7 @@ export default function Login() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       signIn(data);
+      router.push("/");
     } catch (e) {
       console.log("Erro", e);
     }

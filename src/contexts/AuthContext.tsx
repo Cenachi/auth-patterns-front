@@ -1,10 +1,20 @@
 import { api } from "@/services/api";
-import { createContext, PropsWithChildren, useContext } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useRouter } from "next/navigation";
 
 type AuthContextType = {
   isAuthenticated: boolean;
   signUp: (username: string, email: string, password: string) => void;
   signIn: ({ email, password }: SignInData) => void;
+  logout: () => void;
+
+  user: any;
 };
 
 type SignInData = {
@@ -13,9 +23,11 @@ type SignInData = {
 };
 
 const AuthContext = createContext<AuthContextType>({
-  isAuthenticated: false,
+  isAuthenticated: true,
   signUp: () => {},
   signIn: () => {},
+  logout: () => {},
+  user: {},
 });
 
 export const useAuthContext = () => {
@@ -23,10 +35,11 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const isAuthenticated = false;
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [user, setUser] = useState(null);
 
-  const signUp = (username: string, email: string, password: string) => {
-    return api.post("/register", {
+  const signUp = async (username: string, email: string, password: string) => {
+    return await api.post("/register", {
       name: username,
       email: email,
       password: password,
@@ -34,14 +47,42 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   async function signIn({ email, password }: SignInData) {
-    return api.post("/login", {
-      email: email,
-      password: password,
-    });
+    try {
+      const res = await api.post("/login", {
+        email: email,
+        password: password,
+      });
+
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      setUser(res.data.user);
+      setIsAuthenticated(true);
+      console.log(res);
+    } catch (e) {
+      console.error("Erro", e);
+    }
   }
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setIsAuthenticated(false);
+      return;
+    }
+    setIsAuthenticated(true);
+    setUser(JSON.parse(localStorage.getItem("user")!) || null);
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setIsAuthenticated(false);
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signUp, signIn }}>
+    <AuthContext.Provider value={{ isAuthenticated, signUp, signIn, logout,user }}>
       {children}
     </AuthContext.Provider>
   );

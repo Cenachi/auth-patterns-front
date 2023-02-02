@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 import Link from "next/link";
 
@@ -18,6 +19,7 @@ type Inputs = {
 
 export default function Register() {
   const { isAuthenticated, signIn, signUp } = useAuthContext();
+  const router = useRouter();
 
   const schema = yup.object().shape({
     name: yup.string().required("O nome de usuario é necessário"),
@@ -43,7 +45,8 @@ export default function Register() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      await signUp(data.name, data.email, data.password);
+      signUp(data.name, data.email, data.password);
+      router.push("/");
     } catch (e) {
       console.log("Erro", e);
     }
