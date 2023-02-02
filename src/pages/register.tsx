@@ -1,22 +1,26 @@
 import Head from "next/head";
 import { CiLogin } from "react-icons/ci";
-import { FcGoogle } from "react-icons/fc";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton/PrimaryButton";
 import styles from "@/styles/Home.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuthContext } from "../contexts/AuthContext";
 
 import Link from "next/link";
 
 type Inputs = {
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
 };
 
 export default function Register() {
+  const { isAuthenticated, signIn, signUp } = useAuthContext();
+
   const schema = yup.object().shape({
+    name: yup.string().required("O nome de usuario é necessário"),
     email: yup
       .string()
       .email("Email inválido")
@@ -39,9 +43,10 @@ export default function Register() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      // await login(data.email, data.password);
-      // router.push("/");
-    } catch (e) {}
+      await signUp(data.name, data.email, data.password);
+    } catch (e) {
+      console.log("Erro", e);
+    }
   };
 
   return (
@@ -57,6 +62,14 @@ export default function Register() {
           <div className={styles.register}>
             <span>Faça seu registro</span>
           </div>
+
+          <input
+            type="text"
+            {...register("name")}
+            id="name"
+            placeholder="Digite o seu nome"
+          />
+          <small className={"inputError"}>{errors.name?.message}</small>
 
           <input
             type="text"
@@ -92,7 +105,6 @@ export default function Register() {
 
           <PrimaryButton
             type="submit"
-            // onClick={(e) => handleLogin}
             icon={CiLogin}
             text="Criar"
             className={styles.button}

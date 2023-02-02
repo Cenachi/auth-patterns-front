@@ -5,8 +5,7 @@ import styles from "@/styles/Home.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useAuthContext } from "../contexts/AuthContext";
 
 import Link from "next/link";
 
@@ -16,6 +15,8 @@ type Inputs = {
 };
 
 export default function Login() {
+  const { isAuthenticated, signIn, signUp } = useAuthContext();
+
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -32,9 +33,10 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      // await login(data.email, data.password);
-      // router.push("/");
-    } catch (e) {}
+      signIn(data);
+    } catch (e) {
+      console.log("Erro", e);
+    }
   };
 
   return (
